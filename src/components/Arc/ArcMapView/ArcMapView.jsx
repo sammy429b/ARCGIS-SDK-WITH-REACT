@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import MapView from "@arcgis/core/views/MapView";
 import Map from "@arcgis/core/Map";
+import { useArcGIS } from "../../../hooks/useArcGIS";
 
 
 export default function ArcMapView() {
 
-    const mapRef = useRef(null);
+    const {mapRef, viewRef} = useArcGIS(null);
 
     useEffect(() => {
         if (!mapRef.current) return; // Ensure ref exists before using it
@@ -13,7 +14,7 @@ export default function ArcMapView() {
         console.log("Initializing ArcGIS Map...");
 
         const map = new Map({
-            basemap: "streets",
+            basemap: "osm",
         });
 
         const mapView = new MapView({
