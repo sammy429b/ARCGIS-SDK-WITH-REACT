@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { ArcGISProvider } from './context/ArcGISContext.jsx'
 import './index.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <ArcGISProvider>
     <App />
-  </StrictMode>,
+  </ArcGISProvider>,
 )
