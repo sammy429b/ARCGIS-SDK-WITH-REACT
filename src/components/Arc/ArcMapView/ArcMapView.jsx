@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from "react";
 import MapView from "@arcgis/core/views/MapView";
 import Map from "@arcgis/core/Map";
 import { useArcGIS } from "../../../hooks/useArcGIS";
+import BasemapGalleryWidget from "../../ui/widgets/BasemapGalleryWidget/BasemapGalleryWidget";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery";
+import Expand from "@arcgis/core/widgets/Expand";
 
 
 export default function ArcMapView() {
 
-    const {mapRef, viewRef} = useArcGIS(null);
+    const {mapRef, viewRef} = useArcGIS();
 
     useEffect(() => {
         if (!mapRef.current) return; // Ensure ref exists before using it
@@ -24,6 +27,20 @@ export default function ArcMapView() {
             zoom: 5, // Adjust zoom level as needed
         });
 
+        viewRef.current = mapView;
+
+        const basemapGallery = new BasemapGallery({
+            view: viewRef.current,
+          });
+      
+          const basemapGalleryExpand = new Expand({
+            view: viewRef.current,
+            content: basemapGallery,
+            expanded: false,
+          });
+      
+          viewRef.current.ui.add(basemapGalleryExpand, "top-right");
+        
         return () => {
             if (mapView) {
                 mapView.container = null; // Properly remove reference
